@@ -25,13 +25,7 @@ export const connectSocket = (roomId: string): Socket | null => {
   }
 
 
-  if (socket) {
-    if (!socket.rooms || !socket.rooms.includes(roomId)) {
-      socket.emit("joinRoom", roomId); // 방에 참가
-    }
-  }
-
-  // socket.emit("joinRoom", roomId); // 방에 참가
+  socket.emit("joinRoom", roomId); // 방에 참가
   return socket;
 };
 

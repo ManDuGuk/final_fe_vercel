@@ -10,14 +10,28 @@ interface MessagePayload {
 }
 
 export const connectSocket = (roomId: string): Socket | null => {
-  if (!socket) {
+  if (!socket || !socket.connected) { //소켓 연결이 유지되고 있는지 확인
     console.log("Initializing new socket connection.");
-    socket = io("http://221.145.75.81:4000"); // 서버와 연결
+    socket = io("http://whatcpu.p-e.kr", { //서버쪽과 연결
+      transports: ["websocket"],
+      withCredentials: true,
+      reconnection: true, // 재연결 허용
+      reconnectionAttempts: 5, // 최대 시도 횟수
+      reconnectionDelay: 2000 // 재연결 간 간격(ms)
+    });
+
   } else {
     console.log("Socket already connected.");
   }
 
-  socket.emit("joinRoom", roomId); // 방에 참가
+
+  if (socket) {
+    if (!socket.rooms || !socket.rooms.includes(roomId)) {
+      socket.emit("joinRoom", roomId); // 방에 참가
+    }
+  }
+
+  // socket.emit("joinRoom", roomId); // 방에 참가
   return socket;
 };
 
@@ -46,7 +60,8 @@ export const sendMessage = (
 export const onMessage = (callback: (msg: MessagePayload) => void): void => {
   if (socket) {
     console.log("Registering message listener.");
-    socket.off("message"); // 기존 리스너 제거
+    // socket.off("message"); // 기존 리스너 제거
+    socket.removeAllListeners("message"); // 모든 기존 리스너 제거
     socket.on("message", (msg: MessagePayload) => callback(msg));
   } else {
     console.warn("Socket is not connected. Cannot register listener.");

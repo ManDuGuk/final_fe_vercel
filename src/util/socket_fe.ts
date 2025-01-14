@@ -12,7 +12,7 @@ interface MessagePayload {
 export const connectSocket = (roomId: string): Socket | null => {
   if (!socket || !socket.connected) { //소켓 연결이 유지되고 있는지 확인
     console.log("Initializing new socket connection.");
-    socket = io("http://whatcpu.p-e.kr", { //서버쪽과 연결
+    socket = io("https://whatcpu.p-e.kr", { //서버쪽과 연결
       transports: ["websocket"],
       withCredentials: true,
       reconnection: true, // 재연결 허용

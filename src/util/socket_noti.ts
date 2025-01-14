@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 
 // const socket = io("http://localhost:4000"); // WebSocket 서버 URL 확인
 // corse 처리및 경로 수정
-const socket = io("wss://whatcpu.p-e.kr/socket.io/", { //서버쪽과 연결
+const socket = io("https://whatcpu.p-e.kr", { //서버쪽과 연결
   transports: ["websocket"],
   withCredentials: true,
   reconnection: true, // 재연결 허용

@@ -7,7 +7,9 @@ type AckResponse = {
 };
 
 socket.on("connect", () => {
-  console.log("Socket connected successfully!");
+  //정상 연결되면
+  console.log("Socket connected successfully!", socket.id);
+
   const userId = getUserId(); // 사용자 ID 가져오기
   if (userId) {
     console.log("Registering user on initial connection...");
@@ -17,8 +19,16 @@ socket.on("connect", () => {
   }
 });
 
-socket.on("connect_error", (error) => {
-  console.error("Socket connection error:", error.message);
+
+
+// 들어오는 이벤트 로깅
+socket.onAny((event: any, ...args: any) => {
+  console.log(`Received event: ${event}, with args:`, args);
+});
+
+
+socket.on("connect_error", (error: any) => {
+  console.error("Socket connection error:", error);
 });
 
 socket.on("reconnect", () => {
@@ -38,7 +48,7 @@ const backendAuth = `${REACT_APP_BACKEND_URL}/auth`;
 export const logout = async () => {
   try {
     localStorage.removeItem("user");
-    
+
     socket.disconnect();
 
     // 로그아웃 요청 전송

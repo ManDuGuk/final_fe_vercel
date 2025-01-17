@@ -6,26 +6,23 @@ type AckResponse = {
   status: string;
 };
 
-socket.on("connect", () => {
-  //정상 연결되면
-  console.log("Socket connected successfully!", socket.id);
+// socket.on("connect", () => {
+//   //정상 연결되면
+//   console.log("Socket connected successfully!", socket.id);
 
-  const userId = getUserId(); // 사용자 ID 가져오기
-  if (userId) {
-    console.log("Registering user on initial connection...");
-    socket.emit("register", userId, (ack: AckResponse) => {
-      console.log("Initial registration acknowledged:", ack, userId);
-    });
-  }
-});
-
-
+//   const userId = getUserId(); // 사용자 ID 가져오기
+//   if (userId) {
+//     console.log("Registering user on initial connection...");
+//     socket.emit("register", userId, (ack: AckResponse) => {
+//       console.log("Initial registration acknowledged:", ack, userId);
+//     });
+//   }
+// });
 
 // 들어오는 이벤트 로깅
 socket.onAny((event: any, ...args: any) => {
   console.log(`Received event: ${event}, with args:`, args);
 });
-
 
 socket.on("connect_error", (error: any) => {
   console.error("Socket connection error:", error);

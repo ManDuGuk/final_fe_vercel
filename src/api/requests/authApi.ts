@@ -1,23 +1,33 @@
+import { io } from "socket.io-client";
 import { getUserId } from "../../util/getUser";
-import socket from "../../util/socket_noti";
+// import socket from "../../util/socket_noti";
 import axiosInstance from "../client/index";
 
 type AckResponse = {
   status: string;
 };
 
-// socket.on("connect", () => {
-//   //정상 연결되면
-//   console.log("Socket connected successfully!", socket.id);
+const socket = io("https://whatcpu.p-e.kr", { //서버쪽과 연결
+  transports: ["websocket"],
+  withCredentials: true,
+  reconnection: true, // 재연결 허용
+  reconnectionAttempts: 5, // 최대 시도 횟수
+  reconnectionDelay: 2000 // 재연결 간 간격(ms)
+});
 
-//   const userId = getUserId(); // 사용자 ID 가져오기
-//   if (userId) {
-//     console.log("Registering user on initial connection...");
-//     socket.emit("register", userId, (ack: AckResponse) => {
-//       console.log("Initial registration acknowledged:", ack, userId);
-//     });
-//   }
-// });
+
+socket.on("connect", () => {
+  //정상 연결되면
+  console.log("Socket connected successfully!", socket.id);
+
+  const userId = getUserId(); // 사용자 ID 가져오기
+  if (userId) {
+    console.log("Registering user on initial connection...");
+    socket.emit("register", userId, (ack: AckResponse) => {
+      console.log("Initial registration acknowledged:", ack, userId);
+    });
+  }
+});
 
 // 들어오는 이벤트 로깅
 socket.onAny((event: any, ...args: any) => {

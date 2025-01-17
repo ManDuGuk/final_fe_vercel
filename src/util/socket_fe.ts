@@ -20,6 +20,17 @@ export const connectSocket = (roomId: string): Socket | null => {
       reconnectionDelay: 2000 // 재연결 간 간격(ms)
     });
 
+    // 이벤트 핸들러
+    socket.on("connect", () => {
+      console.log("Socket connected successfully! Socket ID:", socket?.id);
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error); // 연결 오류
+      console.error("Full error:", error); // 상세 오류 정보
+    });
+
+
   } else {
     console.log("Socket already connected.");
   }

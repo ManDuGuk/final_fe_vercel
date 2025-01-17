@@ -17,7 +17,7 @@ socket.on("connect", () => {
 
 // 연결 에러 이벤트 (오류 이유 출력)
 socket.on("connect_error", (err: any) => {
-  console.error("Connection error socket-noti:", err.message); // 에러 메시지 출력
+  console.error("Connection error socket-noti:", err); // 에러 메시지 출력
   console.error("Detailed error object socket-noti:", err); // 에러 전체 객체 출력
 });
 

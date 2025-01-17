@@ -7,7 +7,7 @@ type AckResponse = {
   status: string;
 };
 
-const socket = io("https://whatcpu.p-e.kr", { //서버쪽과 연결
+const socket = io("43.201.240.255:4000", { //서버쪽과 연결
   transports: ["websocket"],
   withCredentials: true,
   reconnection: true, // 재연결 허용

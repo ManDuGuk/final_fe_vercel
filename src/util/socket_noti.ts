@@ -5,7 +5,8 @@ import { io } from "socket.io-client";
 
 // WebSocket 클라이언트 초기화
 // const socket = io("https://whatcpu.p-e.kr", { // 서버 URL 설정
-const socket = io("http://localhost:4000", { // 서버 URL 설정
+// const socket = io("http://localhost:4000", { // 서버 URL 설정
+const socket = io("http://43.201.240.255:4000", { // 서버 URL 설정
   path: "/socket.io/", // 서버에서 지정한 path와 동일하게 설정
   transports: ["websocket", "polling"],//WebSocket 연결 실패 시 fallback을 허용
   withCredentials: true, // 쿠키 전송 허용 (서버에서 credentials: true 설정 필요)

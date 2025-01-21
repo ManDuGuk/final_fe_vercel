@@ -2,12 +2,12 @@ import { io } from "socket.io-client";
 
 // const socket = io("http://localhost:4000"); // WebSocket 서버 URL 확인
 // corse 처리및 경로 수정
-const socket = io("https://whatcpu.p-e.kr", { //서버쪽과 연결
-  transports: ["websocket"],
-  withCredentials: true,
-  reconnection: true, // 재연결 허용
-  reconnectionAttempts: 5, // 최대 시도 횟수
-  reconnectionDelay: 2000 // 재연결 간 간격(ms)
+
+// WebSocket 클라이언트 초기화
+const socket = io("https://whatcpu.p-e.kr", { // 서버 URL 설정
+  path: "/socket.io/", // 서버에서 지정한 path와 동일하게 설정
+  transports: ["websocket"], // 웹소켓 연결 강제
+  withCredentials: true, // 쿠키 전송 허용 (서버에서 credentials: true 설정 필요)
 });
 
 // 연결 성공 이벤트
